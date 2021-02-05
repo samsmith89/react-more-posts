@@ -5,21 +5,22 @@ import PressReleases from './Categories/PressReleases';
 function Tabs(props) {
 	const [posts, setPosts] = useState({
 		all: {
-			catId: null,
+			term: 'all',
+			termId: null,
 			posts: []
 		},
 		pressReleases: {
-			catId: 2,
+			term: 'pressReleases',
+			termId: 2,
 			posts: []
 		}
 	});
 	const [offsetPostCount, setOffsetPostCount] = useState(0);
 
-	async function loadPosts() {
+	const loadPosts = async () => {
 		let final = {};
 		for (const type in posts) {
-			let url = createURL(4, posts[type].catId);
-			console.log(url);
+			let url = createURL(4, posts[type].termId);
 			if (offsetPostCount >= 1) {
 				url = `${url}&offset=${offsetPostCount}`;
 			}
@@ -34,7 +35,6 @@ function Tabs(props) {
 			if (newPosts.length >= 1) {
 				let copy = posts;
 				copy[type]['posts'] = newPosts;
-				console.log(copy);
 				final = { ...copy };
 			}
 		}
@@ -42,15 +42,47 @@ function Tabs(props) {
 		// setOffsetPostCount(newPosts.length + offsetPostCount);
 	}
 
+	const loadMorePosts = async (term = 'all', termId = null) => {
+		let url = createURL();
+		if (offsetPostCount >= 1) {
+			url = `${url}&offset=${offsetPostCount}`;
+		}
+
+		const response = await fetch(url);
+		if (!response.ok) {
+			return;
+			console.log("oops");
+		}
+
+		const newPosts = await response.json();
+		if (newPosts.length >= 1) {
+			let copy = posts[term].posts;
+			const final = {
+				...copy,
+				...newPosts
+			}
+			console.log(final);
+			setPosts(prevState => ({
+				...prevState,
+				[term] {
+					...prevState,
+					posts: final
+				}
+			}));
+			console.log(posts);
+		}
+	}
+
+
 	useEffect(() => {
 		loadPosts();
-	}, [setPosts, setOffsetPostCount])
+	}, [])
 
-	function createURL(postPerPage = 4, catId = null) {
+	function createURL(postPerPage = 4, termId = null) {
 		const urlBase = `/wp-json/wp/v2/`;
 		let url;
-		if (catId) {
-			return url = `${urlBase}posts/?categories=${catId}&per_page=${postPerPage}&_embed`;
+		if (termId) {
+			return url = `${urlBase}posts/?categories=${termId}&per_page=${postPerPage}&_embed`;
 		}
 		return url = `${urlBase}posts/?per_page=${postPerPage}&_embed`;
 
@@ -59,9 +91,9 @@ function Tabs(props) {
 
 	return (
 		<Fragment>
-			<All postsInfo={posts.all} loadPosts={loadPosts} />
+			<All postsInfo={posts} loadMorePosts={loadMorePosts} />
 			<h1>Different</h1>
-			<PressReleases postsInfo={posts.pressReleases} loadPosts={loadPosts} />
+			{/* <PressReleases postsInfo={posts.pressReleases} loadMorePosts={loadMorePosts} /> */}
 		</Fragment>
 	)
 };

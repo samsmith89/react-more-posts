@@ -1,9 +1,9 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function All(props) {
-	const { loadPosts } = props;
-	const { posts, catId } = props.postsInfo;
-
+	// console.log(props);
+	const { loadMorePosts } = props;
+	const { term, termId, posts } = props.postsInfo.all;
 	return (
 		<div className={"entry-content"}>
 			{posts && posts.length && posts.map((post, index) => {
@@ -18,7 +18,7 @@ function All(props) {
 					</div>
 				);
 			})}
-			<button id={"poop"} onClick={loadPosts}>get more</button>
+			<button id={"poop"} onClick={() => loadMorePosts(term, termId)}>get more</button>
 		</div >
 	);
 };
