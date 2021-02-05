@@ -1,7 +1,8 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function PressReleases(props) {
-	const { posts, loadPosts, cat, catId } = props;
+	const { loadPosts } = props;
+	const { posts, catId } = props.postsInfo;
 
 	return (
 		<div className={"entry-content"}>

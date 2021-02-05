@@ -247,9 +247,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function All(props) {
-  var posts = props.posts,
-      loadPosts = props.loadPosts,
-      cat = props.cat;
+  var loadPosts = props.loadPosts;
+  var _props$postsInfo = props.postsInfo,
+      posts = _props$postsInfo.posts,
+      catId = _props$postsInfo.catId;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
@@ -292,10 +293,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function PressReleases(props) {
-  var posts = props.posts,
-      loadPosts = props.loadPosts,
-      cat = props.cat,
-      catId = props.catId;
+  var loadPosts = props.loadPosts;
+  var _props$postsInfo = props.postsInfo,
+      posts = _props$postsInfo.posts,
+      catId = _props$postsInfo.catId;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
@@ -361,11 +362,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function Tabs(props) {
   var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])({
     all: {
-      catID: null,
+      catId: null,
       posts: []
     },
     pressReleases: {
-      catID: 2,
+      catId: 2,
       posts: []
     }
   }),
@@ -386,7 +387,7 @@ function Tabs(props) {
     _loadPosts = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var final, cat, url, response, newPosts, copy;
+      var final, type, url, response, newPosts, copy;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -396,50 +397,52 @@ function Tabs(props) {
 
             case 2:
               if ((_context.t1 = _context.t0()).done) {
-                _context.next = 18;
+                _context.next = 19;
                 break;
               }
 
-              cat = _context.t1.value;
-              url = createURL();
+              type = _context.t1.value;
+              url = createURL(4, posts[type].catId);
+              console.log(url);
 
               if (offsetPostCount >= 1) {
                 url = "".concat(url, "&offset=").concat(offsetPostCount);
               }
 
-              _context.next = 8;
+              _context.next = 9;
               return fetch(url);
 
-            case 8:
+            case 9:
               response = _context.sent;
 
               if (response.ok) {
-                _context.next = 12;
+                _context.next = 13;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 12:
-              _context.next = 14;
+            case 13:
+              _context.next = 15;
               return response.json();
 
-            case 14:
+            case 15:
               newPosts = _context.sent;
 
               if (newPosts.length >= 1) {
                 copy = posts;
-                copy[cat]['posts'] = newPosts;
+                copy[type]['posts'] = newPosts;
+                console.log(copy);
                 final = _objectSpread({}, copy);
               }
 
               _context.next = 2;
               break;
 
-            case 18:
+            case 19:
               setPosts(_objectSpread({}, final)); // setOffsetPostCount(newPosts.length + offsetPostCount);
 
-            case 19:
+            case 20:
             case "end":
               return _context.stop();
           }
@@ -450,7 +453,6 @@ function Tabs(props) {
   }
 
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useEffect"])(function () {
-    var catId = null;
     loadPosts();
   }, [setPosts, setOffsetPostCount]);
 
@@ -468,14 +470,11 @@ function Tabs(props) {
   }
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_All__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    posts: posts.all.posts,
-    loadPosts: loadPosts,
-    cat: 'all'
+    postsInfo: posts.all,
+    loadPosts: loadPosts
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Different"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_PressReleases__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    posts: posts.pressReleases.posts,
-    loadPosts: loadPosts,
-    cat: 'pressReleases',
-    catId: 2
+    postsInfo: posts.pressReleases,
+    loadPosts: loadPosts
   }));
 }
 

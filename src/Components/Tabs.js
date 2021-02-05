@@ -5,11 +5,11 @@ import PressReleases from './Categories/PressReleases';
 function Tabs(props) {
 	const [posts, setPosts] = useState({
 		all: {
-			catID: null,
+			catId: null,
 			posts: []
 		},
 		pressReleases: {
-			catID: 2,
+			catId: 2,
 			posts: []
 		}
 	});
@@ -17,8 +17,9 @@ function Tabs(props) {
 
 	async function loadPosts() {
 		let final = {};
-		for (const cat in posts) {
-			let url = createURL();
+		for (const type in posts) {
+			let url = createURL(4, posts[type].catId);
+			console.log(url);
 			if (offsetPostCount >= 1) {
 				url = `${url}&offset=${offsetPostCount}`;
 			}
@@ -32,7 +33,8 @@ function Tabs(props) {
 			const newPosts = await response.json();
 			if (newPosts.length >= 1) {
 				let copy = posts;
-				copy[cat]['posts'] = newPosts;
+				copy[type]['posts'] = newPosts;
+				console.log(copy);
 				final = { ...copy };
 			}
 		}
@@ -41,12 +43,7 @@ function Tabs(props) {
 	}
 
 	useEffect(() => {
-		const catId = null;
-
-
 		loadPosts();
-
-
 	}, [setPosts, setOffsetPostCount])
 
 	function createURL(postPerPage = 4, catId = null) {
@@ -62,9 +59,9 @@ function Tabs(props) {
 
 	return (
 		<Fragment>
-			<All posts={posts.all.posts} loadPosts={loadPosts} cat={'all'} />
+			<All postsInfo={posts.all} loadPosts={loadPosts} />
 			<h1>Different</h1>
-			<PressReleases posts={posts.pressReleases.posts} loadPosts={loadPosts} cat={'pressReleases'} catId={2} />
+			<PressReleases postsInfo={posts.pressReleases} loadPosts={loadPosts} />
 		</Fragment>
 	)
 };
