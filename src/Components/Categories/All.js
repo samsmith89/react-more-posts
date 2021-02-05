@@ -1,31 +1,34 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function All(props) {
-	const [posts, setPosts] = useState([]);
-	const [offsetPostCount, setOffsetPostCount] = useState(0);
+	const posts = props.posts;
+	const loadPosts = props.loadPosts;
 
-	async function loadPosts() {
-		let url = props.createURL;
-		if (offsetPostCount >= 1) {
-			url = `${url}&offset=${offsetPostCount}`;
-		}
+	// const [posts, setPosts] = useState([]);
+	// const [offsetPostCount, setOffsetPostCount] = useState(0);
 
-		const response = await fetch(url);
-		if (!response.ok) {
-			return;
-			console.log("oops");
-		}
+	// async function loadPosts() {
+	// 	let url = props.createURL;
+	// 	if (offsetPostCount >= 1) {
+	// 		url = `${url}&offset=${offsetPostCount}`;
+	// 	}
 
-		const newPosts = await response.json();
-		if (newPosts.length >= 1) {
-			setPosts(posts.concat(newPosts));
-			setOffsetPostCount(props.postPerPage + offsetPostCount);
-		}
-	}
+	// 	const response = await fetch(url);
+	// 	if (!response.ok) {
+	// 		return;
+	// 		console.log("oops");
+	// 	}
 
-	useEffect(() => {
-		loadPosts();
-	}, [setPosts, setOffsetPostCount])
+	// 	const newPosts = await response.json();
+	// 	if (newPosts.length >= 1) {
+	// 		setPosts(posts.concat(newPosts));
+	// 		setOffsetPostCount(props.postPerPage + offsetPostCount);
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	loadPosts();
+	// }, [setPosts, setOffsetPostCount])
 
 	return (
 		<div className={"entry-content"}>
