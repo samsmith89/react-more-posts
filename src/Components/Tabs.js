@@ -4,8 +4,14 @@ import PressReleases from './Categories/PressReleases';
 
 function Tabs(props) {
 	const [posts, setPosts] = useState({
-		all: [],
-		pressReleases: []
+		all: {
+			catID: null,
+			posts: []
+		},
+		pressReleases: {
+			catID: 2,
+			posts: []
+		}
 	});
 	const [offsetPostCount, setOffsetPostCount] = useState(0);
 
@@ -26,7 +32,7 @@ function Tabs(props) {
 			const newPosts = await response.json();
 			if (newPosts.length >= 1) {
 				let copy = posts;
-				copy[cat] = newPosts;
+				copy[cat]['posts'] = newPosts;
 				final = { ...copy };
 			}
 		}
@@ -56,9 +62,9 @@ function Tabs(props) {
 
 	return (
 		<Fragment>
-			<All posts={posts.all} loadPosts={loadPosts} cat={'all'} />
+			<All posts={posts.all.posts} loadPosts={loadPosts} cat={'all'} />
 			<h1>Different</h1>
-			<PressReleases posts={posts.all} loadPosts={loadPosts} cat={'pressReleases'} catId={2} />
+			<PressReleases posts={posts.pressReleases.posts} loadPosts={loadPosts} cat={'pressReleases'} catId={2} />
 		</Fragment>
 	)
 };

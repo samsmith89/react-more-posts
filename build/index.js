@@ -360,8 +360,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function Tabs(props) {
   var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])({
-    all: [],
-    pressReleases: []
+    all: {
+      catID: null,
+      posts: []
+    },
+    pressReleases: {
+      catID: 2,
+      posts: []
+    }
   }),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState, 2),
       posts = _useState2[0],
@@ -423,7 +429,7 @@ function Tabs(props) {
 
               if (newPosts.length >= 1) {
                 copy = posts;
-                copy[cat] = newPosts;
+                copy[cat]['posts'] = newPosts;
                 final = _objectSpread({}, copy);
               }
 
@@ -462,11 +468,11 @@ function Tabs(props) {
   }
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_All__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    posts: posts.all,
+    posts: posts.all.posts,
     loadPosts: loadPosts,
     cat: 'all'
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Different"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_PressReleases__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    posts: posts.all,
+    posts: posts.pressReleases.posts,
     loadPosts: loadPosts,
     cat: 'pressReleases',
     catId: 2
