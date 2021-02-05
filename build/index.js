@@ -222,28 +222,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function All(props) {
   var posts = props.posts;
-  var loadPosts = props.loadPosts; // const [posts, setPosts] = useState([]);
-  // const [offsetPostCount, setOffsetPostCount] = useState(0);
-  // async function loadPosts() {
-  // 	let url = props.createURL;
-  // 	if (offsetPostCount >= 1) {
-  // 		url = `${url}&offset=${offsetPostCount}`;
-  // 	}
-  // 	const response = await fetch(url);
-  // 	if (!response.ok) {
-  // 		return;
-  // 		console.log("oops");
-  // 	}
-  // 	const newPosts = await response.json();
-  // 	if (newPosts.length >= 1) {
-  // 		setPosts(posts.concat(newPosts));
-  // 		setOffsetPostCount(props.postPerPage + offsetPostCount);
-  // 	}
-  // }
-  // useEffect(() => {
-  // 	loadPosts();
-  // }, [setPosts, setOffsetPostCount])
-
+  var loadPosts = props.loadPosts;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
@@ -421,7 +400,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Tabs(props) {
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])({
+    all: [],
+    pressReleases: []
+  }),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
       posts = _useState2[0],
       setPosts = _useState2[1];
@@ -439,43 +421,53 @@ function Tabs(props) {
     _loadPosts = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var url, response, newPosts;
+      var cat,
+          url,
+          response,
+          newPosts,
+          poop,
+          _args = arguments;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              cat = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
               url = createURL();
 
               if (offsetPostCount >= 1) {
                 url = "".concat(url, "&offset=").concat(offsetPostCount);
               }
 
-              _context.next = 4;
+              _context.next = 5;
               return fetch(url);
 
-            case 4:
+            case 5:
               response = _context.sent;
 
               if (response.ok) {
-                _context.next = 8;
+                _context.next = 9;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 8:
-              _context.next = 10;
+            case 9:
+              _context.next = 11;
               return response.json();
 
-            case 10:
+            case 11:
               newPosts = _context.sent;
 
               if (newPosts.length >= 1) {
-                setPosts(posts.concat(newPosts));
+                poop = posts.all.concat(newPosts);
+                setPosts({
+                  all: poop
+                });
                 setOffsetPostCount(newPosts.length + offsetPostCount);
+                ;
               }
 
-            case 12:
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -491,13 +483,19 @@ function Tabs(props) {
 
   function createURL() {
     var postPerPage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 4;
+    var cat = arguments.length > 1 ? arguments[1] : undefined;
     var urlBase = "/wp-json/wp/v2/";
-    var url = "".concat(urlBase, "posts/?&per_page=").concat(postPerPage, "&_embed");
-    return url;
+    var url;
+
+    if (cat) {
+      return url = "".concat(urlBase, "posts/?categories=").concat(cat, "&per_page=").concat(postPerPage, "&_embed");
+    }
+
+    return url = "".concat(urlBase, "posts/?&per_page=").concat(postPerPage, "&_embed");
   }
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_Categories_All__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    posts: posts,
+    posts: posts.all,
     loadPosts: loadPosts
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("h1", null, "Different"));
 }

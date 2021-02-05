@@ -3,10 +3,13 @@ import All from './Categories/All';
 import PressReleases from './Categories/PressReleases';
 
 function Tabs(props) {
-	const [posts, setPosts] = useState([]);
+	const [posts, setPosts] = useState({
+		all: [],
+		pressReleases: []
+	});
 	const [offsetPostCount, setOffsetPostCount] = useState(0);
 
-	async function loadPosts() {
+	async function loadPosts(cat = null) {
 		let url = createURL();
 		if (offsetPostCount >= 1) {
 			url = `${url}&offset=${offsetPostCount}`;
@@ -20,8 +23,9 @@ function Tabs(props) {
 
 		const newPosts = await response.json();
 		if (newPosts.length >= 1) {
-			setPosts(posts.concat(newPosts));
-			setOffsetPostCount(newPosts.length + offsetPostCount);
+			const poop = posts.all.concat(newPosts);
+			setPosts({ all: poop });
+			setOffsetPostCount(newPosts.length + offsetPostCount);;
 		}
 	}
 
@@ -29,15 +33,20 @@ function Tabs(props) {
 		loadPosts();
 	}, [setPosts, setOffsetPostCount])
 
-	function createURL(postPerPage = 4) {
+	function createURL(postPerPage = 4, cat) {
 		const urlBase = `/wp-json/wp/v2/`;
-		let url = `${urlBase}posts/?&per_page=${postPerPage}&_embed`;
-		return url;
+		let url;
+		if (cat) {
+			return url = `${urlBase}posts/?categories=${cat}&per_page=${postPerPage}&_embed`;
+		}
+		return url = `${urlBase}posts/?&per_page=${postPerPage}&_embed`;
+
+
 	}
 
 	return (
 		<Fragment>
-			<All posts={posts} loadPosts={loadPosts} />
+			<All posts={posts.all} loadPosts={loadPosts} />
 			<h1>Different</h1>
 			{/* <PressReleases catId={4} /> */}
 		</Fragment>
