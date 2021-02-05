@@ -1,37 +1,7 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function PressReleases(props) {
-	const [posts, setPosts] = useState([]);
-	const [offsetPostCount, setOffsetPostCount] = useState(0);
-
-	const urlBase = `/wp-json/wp/v2/`;
-	const cat = `2`;
-	const postPerPage = 4;
-	let url = `${urlBase}posts/?categories=${cat}&per_page=${postPerPage}`;
-
-	async function loadPosts() {
-
-		if (offsetPostCount >= 1) {
-			url = `${url}&offset=${offsetPostCount}`;
-		}
-		url = `${url}&_embed`;
-
-		const response = await fetch(url);
-		if (!response.ok) {
-			return;
-			console.log("oops");
-		}
-
-		const newPosts = await response.json();
-		if (newPosts.length >= 1) {
-			setPosts(posts.concat(newPosts));
-			setOffsetPostCount(postPerPage + offsetPostCount);
-		}
-	}
-
-	useEffect(() => {
-		loadPosts();
-	}, [setPosts, setOffsetPostCount])
+	const { posts, loadPosts, cat, catId } = props;
 
 	return (
 		<div className={"entry-content"}>

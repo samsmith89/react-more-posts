@@ -9,46 +9,56 @@ function Tabs(props) {
 	});
 	const [offsetPostCount, setOffsetPostCount] = useState(0);
 
-	async function loadPosts(cat = null) {
-		let url = createURL();
-		if (offsetPostCount >= 1) {
-			url = `${url}&offset=${offsetPostCount}`;
-		}
+	async function loadPosts() {
+		let final = {};
+		for (const cat in posts) {
+			let url = createURL();
+			if (offsetPostCount >= 1) {
+				url = `${url}&offset=${offsetPostCount}`;
+			}
 
-		const response = await fetch(url);
-		if (!response.ok) {
-			return;
-			console.log("oops");
-		}
+			const response = await fetch(url);
+			if (!response.ok) {
+				return;
+				console.log("oops");
+			}
 
-		const newPosts = await response.json();
-		if (newPosts.length >= 1) {
-			const poop = posts.all.concat(newPosts);
-			setPosts({ all: poop });
-			setOffsetPostCount(newPosts.length + offsetPostCount);;
+			const newPosts = await response.json();
+			if (newPosts.length >= 1) {
+				let copy = posts;
+				copy[cat] = newPosts;
+				final = { ...copy };
+			}
 		}
+		setPosts({ ...final });
+		// setOffsetPostCount(newPosts.length + offsetPostCount);
 	}
 
 	useEffect(() => {
+		const catId = null;
+
+
 		loadPosts();
+
+
 	}, [setPosts, setOffsetPostCount])
 
-	function createURL(postPerPage = 4, cat) {
+	function createURL(postPerPage = 4, catId = null) {
 		const urlBase = `/wp-json/wp/v2/`;
 		let url;
-		if (cat) {
-			return url = `${urlBase}posts/?categories=${cat}&per_page=${postPerPage}&_embed`;
+		if (catId) {
+			return url = `${urlBase}posts/?categories=${catId}&per_page=${postPerPage}&_embed`;
 		}
-		return url = `${urlBase}posts/?&per_page=${postPerPage}&_embed`;
+		return url = `${urlBase}posts/?per_page=${postPerPage}&_embed`;
 
 
 	}
 
 	return (
 		<Fragment>
-			<All posts={posts.all} loadPosts={loadPosts} />
+			<All posts={posts.all} loadPosts={loadPosts} cat={'all'} />
 			<h1>Different</h1>
-			{/* <PressReleases catId={4} /> */}
+			<PressReleases posts={posts.all} loadPosts={loadPosts} cat={'pressReleases'} catId={2} />
 		</Fragment>
 	)
 };

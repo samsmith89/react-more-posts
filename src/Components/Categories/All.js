@@ -1,8 +1,7 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function All(props) {
-	const posts = props.posts;
-	const loadPosts = props.loadPosts;
+	const { posts, loadPosts, cat } = props;
 
 	return (
 		<div className={"entry-content"}>

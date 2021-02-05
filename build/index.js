@@ -133,6 +133,32 @@ module.exports = _asyncToGenerator;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js ***!
@@ -221,8 +247,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function All(props) {
-  var posts = props.posts;
-  var loadPosts = props.loadPosts;
+  var posts = props.posts,
+      loadPosts = props.loadPosts,
+      cat = props.cat;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
@@ -259,109 +286,33 @@ function All(props) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 
 
 
 function PressReleases(props) {
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
-      posts = _useState2[0],
-      setPosts = _useState2[1];
-
-  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])(0),
-      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState3, 2),
-      offsetPostCount = _useState4[0],
-      setOffsetPostCount = _useState4[1];
-
-  var urlBase = "/wp-json/wp/v2/";
-  var cat = "2";
-  var postPerPage = 4;
-  var url = "".concat(urlBase, "posts/?categories=").concat(cat, "&per_page=").concat(postPerPage);
-
-  function loadPosts() {
-    return _loadPosts.apply(this, arguments);
-  }
-
-  function _loadPosts() {
-    _loadPosts = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var response, newPosts;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (offsetPostCount >= 1) {
-                url = "".concat(url, "&offset=").concat(offsetPostCount);
-              }
-
-              url = "".concat(url, "&_embed");
-              _context.next = 4;
-              return fetch(url);
-
-            case 4:
-              response = _context.sent;
-
-              if (response.ok) {
-                _context.next = 8;
-                break;
-              }
-
-              return _context.abrupt("return");
-
-            case 8:
-              _context.next = 10;
-              return response.json();
-
-            case 10:
-              newPosts = _context.sent;
-
-              if (newPosts.length >= 1) {
-                setPosts(posts.concat(newPosts));
-                setOffsetPostCount(postPerPage + offsetPostCount);
-              }
-
-            case 12:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-    return _loadPosts.apply(this, arguments);
-  }
-
-  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(function () {
-    loadPosts();
-  }, [setPosts, setOffsetPostCount]);
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("div", {
+  var posts = props.posts,
+      loadPosts = props.loadPosts,
+      cat = props.cat,
+      catId = props.catId;
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("div", {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       key: post.id,
       className: "posts-app__post"
-    }, post._embedded['wp:featuredmedia'] && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("img", {
+    }, post._embedded['wp:featuredmedia'] && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
       src: post._embedded['wp:featuredmedia']['0'].source_url
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("h2", null, post.title.rendered), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("div", {
+    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, post.title.rendered), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       dangerouslySetInnerHTML: {
         __html: post.excerpt.rendered
       }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("a", {
+    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
       href: post.link,
       target: "_blank"
     }, "Read post"));
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("button", {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
     id: "poop",
     onClick: loadPosts
   }, "get more"));
@@ -383,33 +334,41 @@ function PressReleases(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Categories_All__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Categories/All */ "./src/Components/Categories/All.js");
-/* harmony import */ var _Categories_PressReleases__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Categories/PressReleases */ "./src/Components/Categories/PressReleases.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Categories_All__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Categories/All */ "./src/Components/Categories/All.js");
+/* harmony import */ var _Categories_PressReleases__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Categories/PressReleases */ "./src/Components/Categories/PressReleases.js");
 
 
 
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
 
 
 function Tabs(props) {
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])({
+  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])({
     all: [],
     pressReleases: []
   }),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState, 2),
       posts = _useState2[0],
       setPosts = _useState2[1];
 
-  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])(0),
-      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState3, 2),
+  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])(0),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState3, 2),
       offsetPostCount = _useState4[0],
       setOffsetPostCount = _useState4[1];
 
@@ -418,56 +377,63 @@ function Tabs(props) {
   }
 
   function _loadPosts() {
-    _loadPosts = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    _loadPosts = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var cat,
-          url,
-          response,
-          newPosts,
-          poop,
-          _args = arguments;
+      var final, cat, url, response, newPosts, copy;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              cat = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
+              final = {};
+              _context.t0 = _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.keys(posts);
+
+            case 2:
+              if ((_context.t1 = _context.t0()).done) {
+                _context.next = 18;
+                break;
+              }
+
+              cat = _context.t1.value;
               url = createURL();
 
               if (offsetPostCount >= 1) {
                 url = "".concat(url, "&offset=").concat(offsetPostCount);
               }
 
-              _context.next = 5;
+              _context.next = 8;
               return fetch(url);
 
-            case 5:
+            case 8:
               response = _context.sent;
 
               if (response.ok) {
-                _context.next = 9;
+                _context.next = 12;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 9:
-              _context.next = 11;
+            case 12:
+              _context.next = 14;
               return response.json();
 
-            case 11:
+            case 14:
               newPosts = _context.sent;
 
               if (newPosts.length >= 1) {
-                poop = posts.all.concat(newPosts);
-                setPosts({
-                  all: poop
-                });
-                setOffsetPostCount(newPosts.length + offsetPostCount);
-                ;
+                copy = posts;
+                copy[cat] = newPosts;
+                final = _objectSpread({}, copy);
               }
 
-            case 13:
+              _context.next = 2;
+              break;
+
+            case 18:
+              setPosts(_objectSpread({}, final)); // setOffsetPostCount(newPosts.length + offsetPostCount);
+
+            case 19:
             case "end":
               return _context.stop();
           }
@@ -477,27 +443,34 @@ function Tabs(props) {
     return _loadPosts.apply(this, arguments);
   }
 
-  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(function () {
+  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useEffect"])(function () {
+    var catId = null;
     loadPosts();
   }, [setPosts, setOffsetPostCount]);
 
   function createURL() {
     var postPerPage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 4;
-    var cat = arguments.length > 1 ? arguments[1] : undefined;
+    var catId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var urlBase = "/wp-json/wp/v2/";
     var url;
 
-    if (cat) {
-      return url = "".concat(urlBase, "posts/?categories=").concat(cat, "&per_page=").concat(postPerPage, "&_embed");
+    if (catId) {
+      return url = "".concat(urlBase, "posts/?categories=").concat(catId, "&per_page=").concat(postPerPage, "&_embed");
     }
 
-    return url = "".concat(urlBase, "posts/?&per_page=").concat(postPerPage, "&_embed");
+    return url = "".concat(urlBase, "posts/?per_page=").concat(postPerPage, "&_embed");
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_Categories_All__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_All__WEBPACK_IMPORTED_MODULE_5__["default"], {
     posts: posts.all,
-    loadPosts: loadPosts
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("h1", null, "Different"));
+    loadPosts: loadPosts,
+    cat: 'all'
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Different"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_PressReleases__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    posts: posts.all,
+    loadPosts: loadPosts,
+    cat: 'pressReleases',
+    catId: 2
+  }));
 }
 
 ;
