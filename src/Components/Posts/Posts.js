@@ -1,9 +1,8 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
-function PressReleases(props) {
+function Posts(props) {
 	const { loadMorePosts } = props;
-	const { term, termId, posts } = props.postsInfo;
-
+	const { term, termId, posts, postsPerPage } = props.postsInfo;
 	return (
 		<div className={"entry-content"}>
 			{posts && posts.length && posts.map((post, index) => {
@@ -18,9 +17,9 @@ function PressReleases(props) {
 					</div>
 				);
 			})}
-			<button id={"poop"} onClick={() => loadMorePosts(term, termId)}>get more</button>
+			<button id={"poop"} onClick={() => loadMorePosts(term, termId, postsPerPage)}>get more</button>
 		</div >
 	);
 };
 
-export default PressReleases;
+export default Posts;

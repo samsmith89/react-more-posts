@@ -232,10 +232,10 @@ module.exports = _slicedToArray;
 
 /***/ }),
 
-/***/ "./src/Components/Categories/All.js":
-/*!******************************************!*\
-  !*** ./src/Components/Categories/All.js ***!
-  \******************************************/
+/***/ "./src/Components/Posts/Posts.js":
+/*!***************************************!*\
+  !*** ./src/Components/Posts/Posts.js ***!
+  \***************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -246,12 +246,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function All(props) {
+function Posts(props) {
   var loadMorePosts = props.loadMorePosts;
   var _props$postsInfo = props.postsInfo,
       term = _props$postsInfo.term,
       termId = _props$postsInfo.termId,
-      posts = _props$postsInfo.posts;
+      posts = _props$postsInfo.posts,
+      postsPerPage = _props$postsInfo.postsPerPage;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
@@ -271,62 +272,13 @@ function All(props) {
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
     id: "poop",
     onClick: function onClick() {
-      return loadMorePosts(term, termId);
+      return loadMorePosts(term, termId, postsPerPage);
     }
   }, "get more"));
 }
 
 ;
-/* harmony default export */ __webpack_exports__["default"] = (All);
-
-/***/ }),
-
-/***/ "./src/Components/Categories/PressReleases.js":
-/*!****************************************************!*\
-  !*** ./src/Components/Categories/PressReleases.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-
-
-
-function PressReleases(props) {
-  var loadMorePosts = props.loadMorePosts;
-  var _props$postsInfo = props.postsInfo,
-      term = _props$postsInfo.term,
-      termId = _props$postsInfo.termId,
-      posts = _props$postsInfo.posts;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "entry-content"
-  }, posts && posts.length && posts.map(function (post, index) {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      key: post.id,
-      className: "posts-app__post"
-    }, post._embedded['wp:featuredmedia'] && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
-      src: post._embedded['wp:featuredmedia']['0'].source_url
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, post.title.rendered), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      dangerouslySetInnerHTML: {
-        __html: post.excerpt.rendered
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-      href: post.link,
-      target: "_blank"
-    }, "Read post"));
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
-    id: "poop",
-    onClick: function onClick() {
-      return loadMorePosts(term, termId);
-    }
-  }, "get more"));
-}
-
-;
-/* harmony default export */ __webpack_exports__["default"] = (PressReleases);
+/* harmony default export */ __webpack_exports__["default"] = (Posts);
 
 /***/ }),
 
@@ -349,8 +301,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Categories_All__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Categories/All */ "./src/Components/Categories/All.js");
-/* harmony import */ var _Categories_PressReleases__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Categories/PressReleases */ "./src/Components/Categories/PressReleases.js");
+/* harmony import */ var _Posts_Posts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Posts/Posts */ "./src/Components/Posts/Posts.js");
 
 
 
@@ -364,20 +315,21 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-
 function Tabs(props) {
   var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])({
     all: {
       term: 'all',
       termId: null,
       posts: [],
-      offset: 4
+      offset: 0,
+      postsPerPage: 3
     },
     pressReleases: {
       term: 'pressReleases',
       termId: 2,
       posts: [],
-      offset: 0
+      offset: 0,
+      postsPerPage: 2
     }
   }),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState, 2),
@@ -395,55 +347,41 @@ function Tabs(props) {
     var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var final, type, url, response, newPosts, copy;
+      var url, response, newPosts, copy;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              final = {};
-              _context.t0 = _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.keys(posts);
+              url = createURL(posts.all.postsPerPage, posts.all.termId); // this can be combined with the function below
 
-            case 2:
-              if ((_context.t1 = _context.t0()).done) {
-                _context.next = 17;
-                break;
-              }
-
-              type = _context.t1.value;
-              url = createURL(4, posts[type].termId);
-              _context.next = 7;
+              _context.next = 3;
               return fetch(url);
 
-            case 7:
+            case 3:
               response = _context.sent;
 
               if (response.ok) {
-                _context.next = 11;
+                _context.next = 7;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 11:
-              _context.next = 13;
+            case 7:
+              _context.next = 9;
               return response.json();
 
-            case 13:
+            case 9:
               newPosts = _context.sent;
 
               if (newPosts.length >= 1) {
-                copy = posts;
-                copy[type]['posts'] = newPosts;
-                final = _objectSpread({}, copy);
+                copy = _objectSpread({}, posts);
+                copy.all.posts = copy.all.posts.concat(newPosts);
+                copy.all.offset = copy.all.offset + posts.all.postsPerPage;
+                setPosts(copy);
               }
 
-              _context.next = 2;
-              break;
-
-            case 17:
-              setPosts(_objectSpread({}, final)); // setOffsetPostCount(newPosts.length + offsetPostCount);
-
-            case 18:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -481,7 +419,8 @@ function Tabs(props) {
 
               if (posts[term].offset >= 1) {
                 url = "".concat(url, "&offset=").concat(posts[term].offset);
-              }
+              } // this can be combined with the function above
+
 
               _context2.next = 7;
               return fetch(url);
@@ -538,10 +477,10 @@ function Tabs(props) {
     return url = "".concat(urlBase, "posts/?per_page=").concat(postPerPage, "&_embed");
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_All__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_5__["default"], {
     postsInfo: posts.all,
     loadMorePosts: loadMorePosts
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Different"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_PressReleases__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Big Divider"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_5__["default"], {
     postsInfo: posts.pressReleases,
     loadMorePosts: loadMorePosts
   }));

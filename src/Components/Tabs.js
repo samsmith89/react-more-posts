@@ -1,6 +1,5 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
-import All from './Categories/All';
-import PressReleases from './Categories/PressReleases';
+import Posts from './Posts/Posts';
 
 function Tabs(props) {
 	const [posts, setPosts] = useState({
@@ -8,37 +7,36 @@ function Tabs(props) {
 			term: 'all',
 			termId: null,
 			posts: [],
-			offset: 4
+			offset: 0,
+			postsPerPage: 3
 		},
 		pressReleases: {
 			term: 'pressReleases',
 			termId: 2,
 			posts: [],
-			offset: 0
+			offset: 0,
+			postsPerPage: 2
 		}
 	});
 	const [offsetPostCount, setOffsetPostCount] = useState(0);
 
 	const loadPosts = async () => {
-		let final = {};
-		for (const type in posts) {
-			let url = createURL(4, posts[type].termId);
+		let url = createURL(posts.all.postsPerPage, posts.all.termId);
 
-			const response = await fetch(url);
-			if (!response.ok) {
-				return;
-				console.log("oops");
-			}
-
-			const newPosts = await response.json();
-			if (newPosts.length >= 1) {
-				let copy = posts;
-				copy[type]['posts'] = newPosts;
-				final = { ...copy };
-			}
+		// this can be combined with the function below
+		const response = await fetch(url);
+		if (!response.ok) {
+			return;
+			console.log("oops");
 		}
-		setPosts({ ...final });
-		// setOffsetPostCount(newPosts.length + offsetPostCount);
+
+		const newPosts = await response.json();
+		if (newPosts.length >= 1) {
+			let copy = { ...posts };
+			copy.all.posts = copy.all.posts.concat(newPosts);
+			copy.all.offset = copy.all.offset + posts.all.postsPerPage;
+			setPosts(copy);
+		}
 	}
 
 	const loadMorePosts = async (term = 'all', termId = null, postsPerPage = 4) => {
@@ -47,6 +45,7 @@ function Tabs(props) {
 			url = `${url}&offset=${posts[term].offset}`;
 		}
 
+		// this can be combined with the function above
 		const response = await fetch(url);
 		if (!response.ok) {
 			return;
@@ -78,9 +77,9 @@ function Tabs(props) {
 
 	return (
 		<Fragment>
-			<All postsInfo={posts.all} loadMorePosts={loadMorePosts} />
-			<h1>Different</h1>
-			<PressReleases postsInfo={posts.pressReleases} loadMorePosts={loadMorePosts} />
+			<Posts postsInfo={posts.all} loadMorePosts={loadMorePosts} />
+			<h1>Big Divider</h1>
+			<Posts postsInfo={posts.pressReleases} loadMorePosts={loadMorePosts} />
 		</Fragment>
 	)
 };
