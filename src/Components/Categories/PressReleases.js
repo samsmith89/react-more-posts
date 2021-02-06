@@ -1,8 +1,8 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function PressReleases(props) {
-	const { loadPosts } = props;
-	const { posts, catId } = props.postsInfo;
+	const { loadMorePosts } = props;
+	const { term, termId, posts } = props.postsInfo;
 
 	return (
 		<div className={"entry-content"}>
@@ -18,7 +18,7 @@ function PressReleases(props) {
 					</div>
 				);
 			})}
-			<button id={"poop"} onClick={loadPosts}>get more</button>
+			<button id={"poop"} onClick={() => loadMorePosts(term, termId)}>get more</button>
 		</div >
 	);
 };

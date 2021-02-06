@@ -78,9 +78,9 @@ function Tabs(props) {
 
 	return (
 		<Fragment>
-			<All postsInfo={posts} loadMorePosts={loadMorePosts} />
+			<All postsInfo={posts.all} loadMorePosts={loadMorePosts} />
 			<h1>Different</h1>
-			{/* <PressReleases postsInfo={posts.pressReleases} loadMorePosts={loadMorePosts} /> */}
+			<PressReleases postsInfo={posts.pressReleases} loadMorePosts={loadMorePosts} />
 		</Fragment>
 	)
 };

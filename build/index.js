@@ -247,12 +247,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function All(props) {
-  // console.log(props);
   var loadMorePosts = props.loadMorePosts;
-  var _props$postsInfo$all = props.postsInfo.all,
-      term = _props$postsInfo$all.term,
-      termId = _props$postsInfo$all.termId,
-      posts = _props$postsInfo$all.posts;
+  var _props$postsInfo = props.postsInfo,
+      term = _props$postsInfo.term,
+      termId = _props$postsInfo.termId,
+      posts = _props$postsInfo.posts;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
@@ -297,10 +296,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function PressReleases(props) {
-  var loadPosts = props.loadPosts;
+  var loadMorePosts = props.loadMorePosts;
   var _props$postsInfo = props.postsInfo,
-      posts = _props$postsInfo.posts,
-      catId = _props$postsInfo.catId;
+      term = _props$postsInfo.term,
+      termId = _props$postsInfo.termId,
+      posts = _props$postsInfo.posts;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, posts && posts.length && posts.map(function (post, index) {
@@ -319,7 +319,9 @@ function PressReleases(props) {
     }, "Read post"));
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
     id: "poop",
-    onClick: loadPosts
+    onClick: function onClick() {
+      return loadMorePosts(term, termId);
+    }
   }, "get more"));
 }
 
@@ -537,9 +539,12 @@ function Tabs(props) {
   }
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_All__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    postsInfo: posts,
+    postsInfo: posts.all,
     loadMorePosts: loadMorePosts
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Different"));
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Different"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Categories_PressReleases__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    postsInfo: posts.pressReleases,
+    loadMorePosts: loadMorePosts
+  }));
 }
 
 ;

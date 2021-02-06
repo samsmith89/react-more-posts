@@ -1,9 +1,8 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function All(props) {
-	// console.log(props);
 	const { loadMorePosts } = props;
-	const { term, termId, posts } = props.postsInfo.all;
+	const { term, termId, posts } = props.postsInfo;
 	return (
 		<div className={"entry-content"}>
 			{posts && posts.length && posts.map((post, index) => {
