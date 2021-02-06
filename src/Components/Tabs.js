@@ -7,12 +7,14 @@ function Tabs(props) {
 		all: {
 			term: 'all',
 			termId: null,
-			posts: []
+			posts: [],
+			offset: 0
 		},
 		pressReleases: {
 			term: 'pressReleases',
 			termId: 2,
-			posts: []
+			posts: [],
+			offset: 0
 		}
 	});
 	const [offsetPostCount, setOffsetPostCount] = useState(0);
@@ -56,20 +58,9 @@ function Tabs(props) {
 
 		const newPosts = await response.json();
 		if (newPosts.length >= 1) {
-			let copy = posts[term].posts;
-			const final = {
-				...copy,
-				...newPosts
-			}
-			console.log(final);
-			setPosts(prevState => ({
-				...prevState,
-				[term] {
-					...prevState,
-					posts: final
-				}
-			}));
-			console.log(posts);
+			let copy = { ...posts };
+			copy[term].posts = copy[term].posts.concat(newPosts);
+			setPosts(copy);
 		}
 	}
 
@@ -85,8 +76,6 @@ function Tabs(props) {
 			return url = `${urlBase}posts/?categories=${termId}&per_page=${postPerPage}&_embed`;
 		}
 		return url = `${urlBase}posts/?per_page=${postPerPage}&_embed`;
-
-
 	}
 
 	return (
