@@ -8,7 +8,7 @@ function Tabs(props) {
 			term: 'all',
 			termId: null,
 			posts: [],
-			offset: 0
+			offset: 4
 		},
 		pressReleases: {
 			term: 'pressReleases',
@@ -23,9 +23,6 @@ function Tabs(props) {
 		let final = {};
 		for (const type in posts) {
 			let url = createURL(4, posts[type].termId);
-			if (offsetPostCount >= 1) {
-				url = `${url}&offset=${offsetPostCount}`;
-			}
 
 			const response = await fetch(url);
 			if (!response.ok) {
@@ -44,10 +41,10 @@ function Tabs(props) {
 		// setOffsetPostCount(newPosts.length + offsetPostCount);
 	}
 
-	const loadMorePosts = async (term = 'all', termId = null) => {
-		let url = createURL();
-		if (offsetPostCount >= 1) {
-			url = `${url}&offset=${offsetPostCount}`;
+	const loadMorePosts = async (term = 'all', termId = null, postsPerPage = 4) => {
+		let url = createURL(postsPerPage, termId);
+		if (posts[term].offset >= 1) {
+			url = `${url}&offset=${posts[term].offset}`;
 		}
 
 		const response = await fetch(url);
@@ -60,6 +57,7 @@ function Tabs(props) {
 		if (newPosts.length >= 1) {
 			let copy = { ...posts };
 			copy[term].posts = copy[term].posts.concat(newPosts);
+			copy[term].offset = copy[term].offset + postsPerPage;
 			setPosts(copy);
 		}
 	}
@@ -69,7 +67,7 @@ function Tabs(props) {
 		loadPosts();
 	}, [])
 
-	function createURL(postPerPage = 4, termId = null) {
+	function createURL(postPerPage, termId) {
 		const urlBase = `/wp-json/wp/v2/`;
 		let url;
 		if (termId) {

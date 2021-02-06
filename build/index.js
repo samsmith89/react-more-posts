@@ -369,7 +369,7 @@ function Tabs(props) {
       term: 'all',
       termId: null,
       posts: [],
-      offset: 0
+      offset: 4
     },
     pressReleases: {
       term: 'pressReleases',
@@ -403,35 +403,30 @@ function Tabs(props) {
 
             case 2:
               if ((_context.t1 = _context.t0()).done) {
-                _context.next = 18;
+                _context.next = 17;
                 break;
               }
 
               type = _context.t1.value;
               url = createURL(4, posts[type].termId);
-
-              if (offsetPostCount >= 1) {
-                url = "".concat(url, "&offset=").concat(offsetPostCount);
-              }
-
-              _context.next = 8;
+              _context.next = 7;
               return fetch(url);
 
-            case 8:
+            case 7:
               response = _context.sent;
 
               if (response.ok) {
-                _context.next = 12;
+                _context.next = 11;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 12:
-              _context.next = 14;
+            case 11:
+              _context.next = 13;
               return response.json();
 
-            case 14:
+            case 13:
               newPosts = _context.sent;
 
               if (newPosts.length >= 1) {
@@ -443,10 +438,10 @@ function Tabs(props) {
               _context.next = 2;
               break;
 
-            case 18:
+            case 17:
               setPosts(_objectSpread({}, final)); // setOffsetPostCount(newPosts.length + offsetPostCount);
 
-            case 19:
+            case 18:
             case "end":
               return _context.stop();
           }
@@ -467,6 +462,7 @@ function Tabs(props) {
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var term,
           termId,
+          postsPerPage,
           url,
           response,
           newPosts,
@@ -478,39 +474,41 @@ function Tabs(props) {
             case 0:
               term = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 'all';
               termId = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
-              url = createURL();
+              postsPerPage = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : 4;
+              url = createURL(postsPerPage, termId);
 
-              if (offsetPostCount >= 1) {
-                url = "".concat(url, "&offset=").concat(offsetPostCount);
+              if (posts[term].offset >= 1) {
+                url = "".concat(url, "&offset=").concat(posts[term].offset);
               }
 
-              _context2.next = 6;
+              _context2.next = 7;
               return fetch(url);
 
-            case 6:
+            case 7:
               response = _context2.sent;
 
               if (response.ok) {
-                _context2.next = 10;
+                _context2.next = 11;
                 break;
               }
 
               return _context2.abrupt("return");
 
-            case 10:
-              _context2.next = 12;
+            case 11:
+              _context2.next = 13;
               return response.json();
 
-            case 12:
+            case 13:
               newPosts = _context2.sent;
 
               if (newPosts.length >= 1) {
                 copy = _objectSpread({}, posts);
                 copy[term].posts = copy[term].posts.concat(newPosts);
+                copy[term].offset = copy[term].offset + postsPerPage;
                 setPosts(copy);
               }
 
-            case 14:
+            case 15:
             case "end":
               return _context2.stop();
           }
@@ -527,9 +525,7 @@ function Tabs(props) {
     loadPosts();
   }, []);
 
-  function createURL() {
-    var postPerPage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 4;
-    var termId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  function createURL(postPerPage, termId) {
     var urlBase = "/wp-json/wp/v2/";
     var url;
 
