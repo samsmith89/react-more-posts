@@ -20,26 +20,7 @@ function Tabs(props) {
 	});
 	const [offsetPostCount, setOffsetPostCount] = useState(0);
 
-	const loadPosts = async () => {
-		let url = createURL(posts.all.postsPerPage, posts.all.termId);
-
-		// this can be combined with the function below
-		const response = await fetch(url);
-		if (!response.ok) {
-			return;
-			console.log("oops");
-		}
-
-		const newPosts = await response.json();
-		if (newPosts.length >= 1) {
-			let copy = { ...posts };
-			copy.all.posts = copy.all.posts.concat(newPosts);
-			copy.all.offset = copy.all.offset + posts.all.postsPerPage;
-			setPosts(copy);
-		}
-	}
-
-	const loadMorePosts = async (term = 'all', termId = null, postsPerPage = 4) => {
+	const loadPosts = async (term = 'all', termId = null, postsPerPage = 4) => {
 		let url = createURL(postsPerPage, termId);
 		if (posts[term].offset >= 1) {
 			url = `${url}&offset=${posts[term].offset}`;
@@ -61,7 +42,6 @@ function Tabs(props) {
 		}
 	}
 
-
 	useEffect(() => {
 		loadPosts();
 	}, [])
@@ -77,9 +57,9 @@ function Tabs(props) {
 
 	return (
 		<Fragment>
-			<Posts postsInfo={posts.all} loadMorePosts={loadMorePosts} />
+			<Posts postsInfo={posts.all} loadPosts={loadPosts} />
 			<h1>Big Divider</h1>
-			<Posts postsInfo={posts.pressReleases} loadMorePosts={loadMorePosts} />
+			<Posts postsInfo={posts.pressReleases} loadPosts={loadPosts} />
 		</Fragment>
 	)
 };

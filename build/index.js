@@ -247,7 +247,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Posts(props) {
-  var loadMorePosts = props.loadMorePosts;
+  var loadPosts = props.loadPosts;
   var _props$postsInfo = props.postsInfo,
       term = _props$postsInfo.term,
       termId = _props$postsInfo.termId,
@@ -272,7 +272,7 @@ function Posts(props) {
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
     id: "poop",
     onClick: function onClick() {
-      return loadMorePosts(term, termId, postsPerPage);
+      return loadPosts(term, termId, postsPerPage);
     }
   }, "get more"));
 }
@@ -347,59 +347,6 @@ function Tabs(props) {
     var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var url, response, newPosts, copy;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              url = createURL(posts.all.postsPerPage, posts.all.termId); // this can be combined with the function below
-
-              _context.next = 3;
-              return fetch(url);
-
-            case 3:
-              response = _context.sent;
-
-              if (response.ok) {
-                _context.next = 7;
-                break;
-              }
-
-              return _context.abrupt("return");
-
-            case 7:
-              _context.next = 9;
-              return response.json();
-
-            case 9:
-              newPosts = _context.sent;
-
-              if (newPosts.length >= 1) {
-                copy = _objectSpread({}, posts);
-                copy.all.posts = copy.all.posts.concat(newPosts);
-                copy.all.offset = copy.all.offset + posts.all.postsPerPage;
-                setPosts(copy);
-              }
-
-            case 11:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function loadPosts() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  var loadMorePosts =
-  /*#__PURE__*/
-  function () {
-    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var term,
           termId,
           postsPerPage,
@@ -407,14 +354,14 @@ function Tabs(props) {
           response,
           newPosts,
           copy,
-          _args2 = arguments;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          _args = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
-              term = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 'all';
-              termId = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
-              postsPerPage = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : 4;
+              term = _args.length > 0 && _args[0] !== undefined ? _args[0] : 'all';
+              termId = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
+              postsPerPage = _args.length > 2 && _args[2] !== undefined ? _args[2] : 4;
               url = createURL(postsPerPage, termId);
 
               if (posts[term].offset >= 1) {
@@ -422,25 +369,25 @@ function Tabs(props) {
               } // this can be combined with the function above
 
 
-              _context2.next = 7;
+              _context.next = 7;
               return fetch(url);
 
             case 7:
-              response = _context2.sent;
+              response = _context.sent;
 
               if (response.ok) {
-                _context2.next = 11;
+                _context.next = 11;
                 break;
               }
 
-              return _context2.abrupt("return");
+              return _context.abrupt("return");
 
             case 11:
-              _context2.next = 13;
+              _context.next = 13;
               return response.json();
 
             case 13:
-              newPosts = _context2.sent;
+              newPosts = _context.sent;
 
               if (newPosts.length >= 1) {
                 copy = _objectSpread({}, posts);
@@ -451,14 +398,14 @@ function Tabs(props) {
 
             case 15:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2);
+      }, _callee);
     }));
 
-    return function loadMorePosts() {
-      return _ref2.apply(this, arguments);
+    return function loadPosts() {
+      return _ref.apply(this, arguments);
     };
   }();
 
@@ -479,10 +426,10 @@ function Tabs(props) {
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_5__["default"], {
     postsInfo: posts.all,
-    loadMorePosts: loadMorePosts
+    loadPosts: loadPosts
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])("h1", null, "Big Divider"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_5__["default"], {
     postsInfo: posts.pressReleases,
-    loadMorePosts: loadMorePosts
+    loadPosts: loadPosts
   }));
 }
 

@@ -1,7 +1,7 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 
 function Posts(props) {
-	const { loadMorePosts } = props;
+	const { loadPosts } = props;
 	const { term, termId, posts, postsPerPage } = props.postsInfo;
 	return (
 		<div className={"entry-content"}>
@@ -17,7 +17,7 @@ function Posts(props) {
 					</div>
 				);
 			})}
-			<button id={"poop"} onClick={() => loadMorePosts(term, termId, postsPerPage)}>get more</button>
+			<button id={"poop"} onClick={() => loadPosts(term, termId, postsPerPage)}>get more</button>
 		</div >
 	);
 };
