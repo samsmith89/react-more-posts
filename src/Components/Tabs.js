@@ -1,5 +1,5 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
-import Posts from './Posts/Posts';
+import Subheader from './Subheader';
 
 function Tabs(props) {
 	const [posts, setPosts] = useState({
@@ -18,7 +18,6 @@ function Tabs(props) {
 			postsPerPage: 2
 		}
 	});
-	const [offsetPostCount, setOffsetPostCount] = useState(0);
 
 	const loadPosts = async (term = 'all', termId = null, postsPerPage = 4) => {
 		let url = createURL(postsPerPage, termId);
@@ -57,9 +56,7 @@ function Tabs(props) {
 
 	return (
 		<Fragment>
-			<Posts postsInfo={posts.all} loadPosts={loadPosts} />
-			<h1>Big Divider</h1>
-			<Posts postsInfo={posts.pressReleases} loadPosts={loadPosts} />
+			<Subheader posts={posts} loadPosts={loadPosts} />
 		</Fragment>
 	)
 };
