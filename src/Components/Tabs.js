@@ -56,9 +56,25 @@ function Tabs(props) {
 		return url = `${urlBase}posts/?per_page=${postPerPage}&_embed`;
 	}
 
+	const selectTab = (term) => {
+		for (let [key, value] of Object.entries(posts)) {
+			console.log(key);
+			console.log(term);
+			if (key === term) {
+				let copy = { ...posts };
+				copy[term].isActive = true;
+				setPosts(copy);
+			} else {
+				let copy = { ...posts };
+				copy[term].isActive = false;
+				setPosts(copy);
+			}
+		}
+	}
+
 	return (
 		<Fragment>
-			<Subheader posts={posts} loadPosts={loadPosts} />
+			<Subheader posts={posts} loadPosts={loadPosts} selectTab={selectTab} />
 		</Fragment>
 	)
 };

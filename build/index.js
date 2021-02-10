@@ -298,13 +298,13 @@ __webpack_require__.r(__webpack_exports__);
 
 function Subheader(props) {
   var posts = props.posts,
-      loadPosts = props.loadPosts;
-
-  var selectTab = function selectTab() {
-    for (var i = 0; i < posts; i++) {
-      if (i.isActive) {}
-    }
-  };
+      loadPosts = props.loadPosts,
+      selectTab = props.selectTab; // const selectTab = (i) => {
+  // 	Object.entries(posts).map((post, index) => {
+  // 		console.log(post[1].isActive);
+  // 		if (post[1] = term)
+  // 	});
+  // };
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
@@ -313,18 +313,20 @@ function Subheader(props) {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
     id: "all",
     className: "tablinks",
-    onClick: selectTab
+    onClick: function onClick() {
+      return selectTab('all');
+    }
   }, "All"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
     id: "press-releases",
     className: "tablinks",
-    onClick: selectTab
+    onClick: function onClick() {
+      return selectTab('pressReleases');
+    }
   }, "Press Releases")), Object.entries(posts).map(function (post, index) {
-    console.log(post);
-
     if (post[1].isActive) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_1__["default"], {
         className: "tabcontent",
-        postsInfo: posts.all,
+        postsInfo: posts[post[1].term],
         loadPosts: loadPosts
       });
     }
@@ -475,9 +477,33 @@ function Tabs(props) {
     return url = "".concat(urlBase, "posts/?per_page=").concat(postPerPage, "&_embed");
   }
 
+  var selectTab = function selectTab(term) {
+    for (var _i = 0, _Object$entries = Object.entries(posts); _i < _Object$entries.length; _i++) {
+      var _Object$entries$_i = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_Object$entries[_i], 2),
+          key = _Object$entries$_i[0],
+          value = _Object$entries$_i[1];
+
+      console.log(key);
+      console.log(term);
+
+      if (key === term) {
+        var copy = _objectSpread({}, posts);
+
+        copy[term].isActive = true;
+        setPosts(copy);
+      } else {
+        var _copy = _objectSpread({}, posts);
+
+        _copy[term].isActive = false;
+        setPosts(_copy);
+      }
+    }
+  };
+
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["createElement"])(_Subheader__WEBPACK_IMPORTED_MODULE_5__["default"], {
     posts: posts,
-    loadPosts: loadPosts
+    loadPosts: loadPosts,
+    selectTab: selectTab
   }));
 }
 
