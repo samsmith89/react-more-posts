@@ -253,9 +253,7 @@ function Posts(props) {
       termId = _props$postsInfo.termId,
       posts = _props$postsInfo.posts,
       postsPerPage = _props$postsInfo.postsPerPage;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "entry-content"
-  }, posts && posts.length && posts.map(function (post, index) {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, posts && posts.length && posts.map(function (post, index) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       key: post.id,
       className: "posts-app__post"
@@ -291,47 +289,46 @@ function Posts(props) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Posts_Posts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Posts/Posts */ "./src/Components/Posts/Posts.js");
-
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Posts_Posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Posts/Posts */ "./src/Components/Posts/Posts.js");
 
 
 
 
 function Subheader(props) {
-  function ControlledTabs() {
-    var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])('home'),
-        _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
-        key = _useState2[0],
-        setKey = _useState2[1];
+  var posts = props.posts,
+      loadPosts = props.loadPosts;
 
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(Tabs, {
-      id: "controlled-tab-example",
-      activeKey: key,
-      onSelect: function onSelect(k) {
-        return setKey(k);
-      }
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(Tab, {
-      eventKey: "home",
-      title: "All"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      className: "tabcontent",
-      postsInfo: props.posts.all,
-      loadPosts: props.loadPosts
-    })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(Tab, {
-      eventKey: "profile",
-      title: "Press Releases"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      className: "tabcontent",
-      postsInfo: props.posts.pressReleases,
-      loadPosts: props.loadPosts
-    })));
-  }
+  var selectTab = function selectTab() {
+    for (var i = 0; i < posts; i++) {
+      if (i.isActive) {}
+    }
+  };
 
-  render(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(ControlledTabs, null));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "entry-content"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    class: "tab"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
+    id: "all",
+    className: "tablinks",
+    onClick: selectTab
+  }, "All"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
+    id: "press-releases",
+    className: "tablinks",
+    onClick: selectTab
+  }, "Press Releases")), Object.entries(posts).map(function (post, index) {
+    console.log(post);
+
+    if (post[1].isActive) {
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        className: "tabcontent",
+        postsInfo: posts.all,
+        loadPosts: loadPosts
+      });
+    }
+  }));
 }
 
 ;
@@ -379,14 +376,16 @@ function Tabs(props) {
       termId: null,
       posts: [],
       offset: 0,
-      postsPerPage: 3
+      postsPerPage: 3,
+      isActive: true
     },
     pressReleases: {
       term: 'pressReleases',
       termId: 2,
       posts: [],
       offset: 0,
-      postsPerPage: 2
+      postsPerPage: 2,
+      isActive: false
     }
   }),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState, 2),
