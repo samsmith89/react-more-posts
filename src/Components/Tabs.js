@@ -1,45 +1,13 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
-import Posts from './Posts/Posts';
+import Subheader from './Subheader';
+import { getState } from '../Helpers/Helpers';
 
 function Tabs(props) {
-	const [posts, setPosts] = useState({
-		all: {
-			term: 'all',
-			termId: null,
-			posts: [],
-			offset: 0,
-			postsPerPage: 3
-		},
-		pressReleases: {
-			term: 'pressReleases',
-			termId: 2,
-			posts: [],
-			offset: 0,
-			postsPerPage: 2
-		}
-	});
-	const [offsetPostCount, setOffsetPostCount] = useState(0);
+	const [posts, setPosts] = useState(
+		getState()
+	);
 
-	const loadPosts = async () => {
-		let url = createURL(posts.all.postsPerPage, posts.all.termId);
-
-		// this can be combined with the function below
-		const response = await fetch(url);
-		if (!response.ok) {
-			return;
-			console.log("oops");
-		}
-
-		const newPosts = await response.json();
-		if (newPosts.length >= 1) {
-			let copy = { ...posts };
-			copy.all.posts = copy.all.posts.concat(newPosts);
-			copy.all.offset = copy.all.offset + posts.all.postsPerPage;
-			setPosts(copy);
-		}
-	}
-
-	const loadMorePosts = async (term = 'all', termId = null, postsPerPage = 4) => {
+	const loadPosts = async (term = 'all', termId = null, postsPerPage = 4) => {
 		let url = createURL(postsPerPage, termId);
 		if (posts[term].offset >= 1) {
 			url = `${url}&offset=${posts[term].offset}`;
@@ -49,7 +17,7 @@ function Tabs(props) {
 		const response = await fetch(url);
 		if (!response.ok) {
 			return;
-			console.log("oops");
+			console.log("something went wrong, reload and try again");
 		}
 
 		const newPosts = await response.json();
@@ -61,10 +29,9 @@ function Tabs(props) {
 		}
 	}
 
-
 	useEffect(() => {
 		loadPosts();
-	}, [])
+	}, []);
 
 	function createURL(postPerPage, termId) {
 		const urlBase = `/wp-json/wp/v2/`;
@@ -75,11 +42,24 @@ function Tabs(props) {
 		return url = `${urlBase}posts/?per_page=${postPerPage}&_embed`;
 	}
 
+	const selectTab = (term) => {
+		let copy = { ...posts };
+		for (let [key, value] of Object.entries(copy)) {
+			if (key === term) {
+				copy[key].isActive = true;
+				if (copy[key].posts.length === 0) {
+					loadPosts(copy[key].term, copy[key].termId, copy[key].postsPerPage)
+				};
+			} else {
+				copy[key].isActive = false;
+			}
+		}
+		setPosts(copy);
+	}
+
 	return (
 		<Fragment>
-			<Posts postsInfo={posts.all} loadMorePosts={loadMorePosts} />
-			<h1>Big Divider</h1>
-			<Posts postsInfo={posts.pressReleases} loadMorePosts={loadMorePosts} />
+			<Subheader posts={posts} loadPosts={loadPosts} selectTab={selectTab} />
 		</Fragment>
 	)
 };
