@@ -299,13 +299,7 @@ __webpack_require__.r(__webpack_exports__);
 function Subheader(props) {
   var posts = props.posts,
       loadPosts = props.loadPosts,
-      selectTab = props.selectTab; // const selectTab = (i) => {
-  // 	Object.entries(posts).map((post, index) => {
-  // 		console.log(post[1].isActive);
-  // 		if (post[1] = term)
-  // 	});
-  // };
-
+      selectTab = props.selectTab;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -358,6 +352,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Subheader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Subheader */ "./src/Components/Subheader.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Helpers/Helpers */ "./src/Helpers/Helpers.js");
 
 
 
@@ -371,25 +366,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
+
 function Tabs(props) {
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])({
-    all: {
-      term: 'all',
-      termId: null,
-      posts: [],
-      offset: 0,
-      postsPerPage: 3,
-      isActive: true
-    },
-    pressReleases: {
-      term: 'pressReleases',
-      termId: 2,
-      posts: [],
-      offset: 0,
-      postsPerPage: 2,
-      isActive: false
-    }
-  }),
+  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])(Object(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_6__["getState"])()),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState, 2),
       posts = _useState2[0],
       setPosts = _useState2[1];
@@ -449,9 +428,7 @@ function Tabs(props) {
                 setPosts(copy);
               }
 
-              console.log('should happen once');
-
-            case 16:
+            case 15:
             case "end":
               return _context.stop();
           }
@@ -512,6 +489,39 @@ function Tabs(props) {
 
 ;
 /* harmony default export */ __webpack_exports__["default"] = (Tabs);
+
+/***/ }),
+
+/***/ "./src/Helpers/Helpers.js":
+/*!********************************!*\
+  !*** ./src/Helpers/Helpers.js ***!
+  \********************************/
+/*! exports provided: getState */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getState", function() { return getState; });
+var getState = function getState() {
+  return {
+    all: {
+      term: 'all',
+      termId: null,
+      posts: [],
+      offset: 0,
+      postsPerPage: 3,
+      isActive: true
+    },
+    pressReleases: {
+      term: 'pressReleases',
+      termId: 2,
+      posts: [],
+      offset: 0,
+      postsPerPage: 2,
+      isActive: false
+    }
+  };
+};
 
 /***/ }),
 

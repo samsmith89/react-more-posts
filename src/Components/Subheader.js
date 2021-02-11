@@ -4,13 +4,6 @@ import Posts from './Posts/Posts';
 function Subheader(props) {
 	const { posts, loadPosts, selectTab } = props;
 
-	// const selectTab = (i) => {
-	// 	Object.entries(posts).map((post, index) => {
-	// 		console.log(post[1].isActive);
-	// 		if (post[1] = term)
-	// 	});
-	// };
-
 	return (
 
 		<div className={"entry-content"}>
@@ -18,9 +11,6 @@ function Subheader(props) {
 				<button id="all" className="tablinks" onClick={() => selectTab('all')}>All</button>
 				<button id="press-releases" className="tablinks" onClick={() => selectTab('pressReleases')}>Press Releases</button>
 			</div>
-			{/* Add the onclicks */}
-			{/* <Posts className="tabcontent" postsInfo={posts.all} loadPosts={loadPosts} />
-			<Posts className="tabcontent" postsInfo={posts.pressReleases} loadPosts={loadPosts} /> */}
 			{Object.entries(posts).map((post, index) => {
 				if (post[1].isActive) {
 					return (

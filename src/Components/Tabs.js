@@ -1,25 +1,11 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 import Subheader from './Subheader';
+import { getState } from '../Helpers/Helpers';
 
 function Tabs(props) {
-	const [posts, setPosts] = useState({
-		all: {
-			term: 'all',
-			termId: null,
-			posts: [],
-			offset: 0,
-			postsPerPage: 3,
-			isActive: true
-		},
-		pressReleases: {
-			term: 'pressReleases',
-			termId: 2,
-			posts: [],
-			offset: 0,
-			postsPerPage: 2,
-			isActive: false
-		}
-	});
+	const [posts, setPosts] = useState(
+		getState()
+	);
 
 	const loadPosts = async (term = 'all', termId = null, postsPerPage = 4) => {
 		let url = createURL(postsPerPage, termId);
@@ -31,7 +17,7 @@ function Tabs(props) {
 		const response = await fetch(url);
 		if (!response.ok) {
 			return;
-			console.log("oops");
+			console.log("something went wrong, reload and try again");
 		}
 
 		const newPosts = await response.json();
@@ -41,7 +27,6 @@ function Tabs(props) {
 			copy[term].offset = copy[term].offset + postsPerPage;
 			setPosts(copy);
 		}
-		console.log('should happen once');
 	}
 
 	useEffect(() => {
