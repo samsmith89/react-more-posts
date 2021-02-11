@@ -292,6 +292,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Posts_Posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Posts/Posts */ "./src/Components/Posts/Posts.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/Helpers */ "./src/Helpers/Helpers.js");
+
 
 
 
@@ -303,20 +305,15 @@ function Subheader(props) {
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "entry-content"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    class: "tab"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
-    id: "all",
-    className: "tablinks",
-    onClick: function onClick() {
-      return selectTab('all');
-    }
-  }, "All"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
-    id: "press-releases",
-    className: "tablinks",
-    onClick: function onClick() {
-      return selectTab('pressReleases');
-    }
-  }, "Press Releases")), Object.entries(posts).map(function (post, index) {
+    class: "tabs"
+  }, Object.entries(posts).map(function (post, index) {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("button", {
+      className: "tablinks",
+      onClick: function onClick() {
+        return selectTab(post[1].term);
+      }
+    }, Object(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_2__["spacecamel"])(post[1].term));
+  })), Object.entries(posts).map(function (post, index) {
     if (post[1].isActive) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_Posts_Posts__WEBPACK_IMPORTED_MODULE_1__["default"], {
         className: "tabcontent",
@@ -496,12 +493,13 @@ function Tabs(props) {
 /*!********************************!*\
   !*** ./src/Helpers/Helpers.js ***!
   \********************************/
-/*! exports provided: getState */
+/*! exports provided: getState, spacecamel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getState", function() { return getState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "spacecamel", function() { return spacecamel; });
 var getState = function getState() {
   return {
     all: {
@@ -519,8 +517,43 @@ var getState = function getState() {
       offset: 0,
       postsPerPage: 2,
       isActive: false
+    },
+    teamUpdates: {
+      term: 'teamUpdates',
+      termId: 3,
+      posts: [],
+      offset: 0,
+      postsPerPage: 3,
+      isActive: false
+    },
+    companyUpdates: {
+      term: 'companyUpdates',
+      termId: 4,
+      posts: [],
+      offset: 0,
+      postsPerPage: 3,
+      isActive: false
+    },
+    productNews: {
+      term: 'productNews',
+      termId: 5,
+      posts: [],
+      offset: 0,
+      postsPerPage: 3,
+      isActive: false
+    },
+    awardsReviews: {
+      term: 'awardsReviews',
+      termId: 6,
+      posts: [],
+      offset: 0,
+      postsPerPage: 3,
+      isActive: false
     }
   };
+};
+var spacecamel = function spacecamel(s) {
+  return s.replace(/([a-z])([A-Z])/g, '$1 $2');
 };
 
 /***/ }),

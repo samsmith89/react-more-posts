@@ -1,5 +1,6 @@
 import { Fragment, Component, useState, useEffect } from "@wordpress/element";
 import Posts from './Posts/Posts';
+import { spacecamel } from '../Helpers/Helpers'
 
 function Subheader(props) {
 	const { posts, loadPosts, selectTab } = props;
@@ -7,9 +8,12 @@ function Subheader(props) {
 	return (
 
 		<div className={"entry-content"}>
-			<div class="tab">
-				<button id="all" className="tablinks" onClick={() => selectTab('all')}>All</button>
-				<button id="press-releases" className="tablinks" onClick={() => selectTab('pressReleases')}>Press Releases</button>
+			<div class="tabs">
+				{Object.entries(posts).map((post, index) => {
+					return (
+						<button className="tablinks" onClick={() => selectTab(post[1].term)}>{spacecamel(post[1].term)}</button>
+					);
+				})}
 			</div>
 			{Object.entries(posts).map((post, index) => {
 				if (post[1].isActive) {
