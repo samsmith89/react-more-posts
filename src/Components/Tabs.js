@@ -41,11 +41,12 @@ function Tabs(props) {
 			copy[term].offset = copy[term].offset + postsPerPage;
 			setPosts(copy);
 		}
+		console.log('should happen once');
 	}
 
 	useEffect(() => {
 		loadPosts();
-	}, [])
+	}, []);
 
 	function createURL(postPerPage, termId) {
 		const urlBase = `/wp-json/wp/v2/`;
@@ -61,6 +62,9 @@ function Tabs(props) {
 		for (let [key, value] of Object.entries(copy)) {
 			if (key === term) {
 				copy[key].isActive = true;
+				if (copy[key].posts.length === 0) {
+					loadPosts(copy[key].term, copy[key].termId, copy[key].postsPerPage)
+				};
 			} else {
 				copy[key].isActive = false;
 			}

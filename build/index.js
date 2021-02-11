@@ -449,7 +449,9 @@ function Tabs(props) {
                 setPosts(copy);
               }
 
-            case 15:
+              console.log('should happen once');
+
+            case 16:
             case "end":
               return _context.stop();
           }
@@ -487,6 +489,12 @@ function Tabs(props) {
 
       if (key === term) {
         copy[key].isActive = true;
+
+        if (copy[key].posts.length === 0) {
+          loadPosts(copy[key].term, copy[key].termId, copy[key].postsPerPage);
+        }
+
+        ;
       } else {
         copy[key].isActive = false;
       }
