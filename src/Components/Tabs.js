@@ -57,19 +57,15 @@ function Tabs(props) {
 	}
 
 	const selectTab = (term) => {
-		for (let [key, value] of Object.entries(posts)) {
-			console.log(key);
-			console.log(term);
+		let copy = { ...posts };
+		for (let [key, value] of Object.entries(copy)) {
 			if (key === term) {
-				let copy = { ...posts };
-				copy[term].isActive = true;
-				setPosts(copy);
+				copy[key].isActive = true;
 			} else {
-				let copy = { ...posts };
-				copy[term].isActive = false;
-				setPosts(copy);
+				copy[key].isActive = false;
 			}
 		}
+		setPosts(copy);
 	}
 
 	return (
